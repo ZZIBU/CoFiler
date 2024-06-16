@@ -112,3 +112,6 @@ fabric.properties
 
 # ignore config file
 *.toml
+
+# ignore test data folder
+*/data
