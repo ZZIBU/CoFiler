@@ -15,6 +15,11 @@ type Config struct {
 		Uri string
 		Db  string
 	}
+
+	Storage struct {
+		Type     string
+		BasePath string // for local
+	}
 }
 
 func NewConfig(path string) *Config {

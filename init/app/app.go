@@ -5,6 +5,7 @@ import (
 	"Core/repository"
 	"Core/router"
 	"Core/service"
+	"Core/storage"
 )
 
 type App struct {
@@ -12,6 +13,7 @@ type App struct {
 	router     *router.Router
 	service    *service.Service
 	repository *repository.Repository
+	storage    storage.Storage
 }
 
 func NewApp(config *config.Config) {
@@ -20,10 +22,13 @@ func NewApp(config *config.Config) {
 	}
 
 	var err error
+	if app.storage, err = storage.NewStorage(config); err != nil {
+		panic(err)
+	}
 	if app.repository, err = repository.NewRepository(config); err != nil {
 		panic(err)
 	}
-	if app.service, err = service.NewService(config, app.repository); err != nil {
+	if app.service, err = service.NewService(config, app.repository, app.storage); err != nil {
 		panic(err)
 	}
 	if app.router, err = router.NewRouter(config, app.service); err != nil {
