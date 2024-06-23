@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"Core/config"
+	"CoFiler/config"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

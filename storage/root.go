@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"Core/config"
+	"CoFiler/config"
 	"errors"
 	"io"
 )
