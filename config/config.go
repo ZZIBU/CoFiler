@@ -7,18 +7,21 @@ import (
 
 type Config struct {
 	ServerInfo struct {
-		Port string
-		Info string
+		Port        string
+		Info        string
+		Development bool
 	}
-
 	MongoDB struct {
 		Uri string
 		Db  string
 	}
-
 	Storage struct {
 		Type     string
 		BasePath string // for local
+	}
+	Logging struct {
+		Level    int8
+		Encoding string
 	}
 }
 
