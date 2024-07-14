@@ -10,7 +10,7 @@ type LocalStorage struct {
 	basePath string
 }
 
-func NewLocalStorage(basePath string) *LocalStorage {
+func NewLocalHandler(basePath string) *LocalStorage {
 	return &LocalStorage{
 		basePath: basePath,
 	}

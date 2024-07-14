@@ -1,24 +1,24 @@
-package service
+package file
 
 import (
-	"CoFiler/storage"
+	"CoFiler/services/file/storage"
 	"errors"
 	"mime/multipart"
 	"path/filepath"
 	"slices"
 )
 
-type FileService struct {
+type Service struct {
 	storage storage.Storage
 }
 
-func NewFileService(storage storage.Storage) *FileService {
-	return &FileService{
+func NewService(storage storage.Storage) *Service {
+	return &Service{
 		storage: storage,
 	}
 }
 
-func (fs *FileService) Save(filename string, file multipart.File) error {
+func (fs *Service) Save(filename string, file multipart.File) error {
 	if err := validateFile(filename, file); err != nil {
 		return err
 	} else {

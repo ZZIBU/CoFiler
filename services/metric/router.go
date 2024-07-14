@@ -1,4 +1,4 @@
-package controller
+package metric
 
 import (
 	"CoFiler/utils/logging"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func MetricRouter(e *gin.Engine) {
+func NewRouter(e *gin.Engine) {
 	metricV1 := e.Group("/api/v1")
 	metricV1.Use()
 	{
