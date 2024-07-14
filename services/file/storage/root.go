@@ -22,7 +22,7 @@ func NewStorage(config *config.Config) (Storage, error) {
 		if basePath := config.Storage.BasePath; basePath == "" {
 			return nil, errors.New("missing basePath for local storage")
 		} else {
-			return NewLocalStorage(basePath), nil
+			return NewLocalHandler(basePath), nil
 		}
 	default:
 		return nil, errors.New("unsupported storage type")

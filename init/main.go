@@ -2,10 +2,10 @@ package main
 
 import (
 	"CoFiler/config"
-	"CoFiler/controller"
 	"CoFiler/init/app"
-	"CoFiler/service"
-	"CoFiler/storage"
+	"CoFiler/services/file"
+	"CoFiler/services/file/storage"
+	"CoFiler/services/metric"
 	"CoFiler/utils/logging"
 	"encoding/json"
 	"flag"
@@ -45,15 +45,15 @@ func main() {
 		),
 		fx.Provide(
 			storage.NewStorage,
-			service.NewFileService,
-			controller.NewFileHandler,
+			file.NewService,
+			file.NewHandler,
 
 			// gin di
 			app.NewServer,
 		),
 		fx.Invoke(
-			controller.FileRouter,
-			controller.MetricRouter,
+			file.NewRouter,
+			metric.NewRouter,
 			func(*gin.Engine) {},
 		),
 	).Run()

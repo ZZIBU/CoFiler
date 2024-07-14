@@ -1,7 +1,7 @@
-package controller
+package file
 
 import (
-	"CoFiler/service"
+	"CoFiler/utils"
 	"CoFiler/utils/logging"
 	"github.com/gin-gonic/gin"
 	"mime/multipart"
@@ -9,17 +9,7 @@ import (
 	"sync"
 )
 
-type FileHandler struct {
-	service *service.FileService
-}
-
-func NewFileHandler(service *service.FileService) *FileHandler {
-	return &FileHandler{
-		service: service,
-	}
-}
-
-func FileRouter(e *gin.Engine, h *FileHandler) {
+func NewRouter(e *gin.Engine, h *Handler) {
 	v1 := e.Group("/api/v1")
 	fileV1 := v1.Group("/file")
 
@@ -29,7 +19,17 @@ func FileRouter(e *gin.Engine, h *FileHandler) {
 	}
 }
 
-func (h *FileHandler) uploadFile(c *gin.Context) {
+type Handler struct {
+	service *Service
+}
+
+func NewHandler(service *Service) *Handler {
+	return &Handler{
+		service: service,
+	}
+}
+
+func (h *Handler) uploadFile(c *gin.Context) {
 	logger := logging.FromContext(c)
 	logger.Info("UploadFile")
 
@@ -37,12 +37,12 @@ func (h *FileHandler) uploadFile(c *gin.Context) {
 
 	// 요청 사이즈 확인
 	if err = c.Request.ParseMultipartForm(10 << 20); err != nil {
-		GeneralResponse(c, http.StatusBadRequest, "Exceed file size", 0, "")
+		utils.GeneralResponse(c, http.StatusBadRequest, "Exceed file size", 0, "")
 		return
 	}
 
 	if files, ok := c.Request.MultipartForm.File["files"]; !ok || len(files) == 0 {
-		GeneralResponse(c, http.StatusBadRequest, "No files uploaded", 0, "")
+		utils.GeneralResponse(c, http.StatusBadRequest, "No files uploaded", 0, "")
 		return
 	} else {
 		var wg sync.WaitGroup
@@ -68,10 +68,10 @@ func (h *FileHandler) uploadFile(c *gin.Context) {
 
 		for err := range errChan {
 			if err != nil {
-				GeneralResponse(c, http.StatusInternalServerError, "Error saving the file", 0, err.Error())
+				utils.GeneralResponse(c, http.StatusInternalServerError, "Error saving the file", 0, err.Error())
 				return
 			}
 		}
-		GeneralResponse(c, http.StatusOK, "Success", 0, "")
+		utils.GeneralResponse(c, http.StatusOK, "Success", 0, "")
 	}
 }

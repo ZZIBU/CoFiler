@@ -1,7 +1,7 @@
-package controller
+package utils
 
 import (
-	"CoFiler/types"
+	"CoFiler/services/common/types"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
