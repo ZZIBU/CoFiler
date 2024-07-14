@@ -3,6 +3,7 @@ package main
 import (
 	"CoFiler/config"
 	"CoFiler/init/app"
+	"CoFiler/rpc"
 	"CoFiler/services/file"
 	"CoFiler/services/file/storage"
 	"CoFiler/services/metric"
@@ -47,6 +48,7 @@ func main() {
 			storage.NewStorage,
 			file.NewService,
 			file.NewHandler,
+			rpc.NewCofilerClient,
 
 			// gin di
 			app.NewServer,
