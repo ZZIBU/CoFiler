@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package cofiler;
+
+option go_package = "/cofiler";
+
+service TagService {
+  rpc GenerateTags (CreateTagRequest) returns (CreateTagResponse) {}
+}
+
+message CreateTagRequest {
+  bytes image = 1;
+}
+
+message CreateTagResponse {
+  repeated string tags = 1;
+}
